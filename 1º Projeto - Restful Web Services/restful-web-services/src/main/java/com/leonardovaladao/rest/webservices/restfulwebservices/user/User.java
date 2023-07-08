@@ -1,29 +1,43 @@
 package com.leonardovaladao.rest.webservices.restfulwebservices.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Past;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
+@Entity(name = "USER_DETAILS")
 public class User {
 
+	@Id
 	private Integer id;
-	
-	@Min(value = 2, message = "The name should have atleast 2 characters.")
+
+	@Size(min = 2, message = "The name should have atleast 2 characters.")
 	@JsonProperty("user_name")
 	private String name;
-	
-	@Past(message = "The birth date should be in the past.")
+
+	@PastOrPresent(message = "The birth date should be in the past.")
 	@JsonProperty("birth_date")
-	private LocalDate birth;
+	private LocalDate birthDate;
 	
-	public User(Integer id, String name, LocalDate birth) {
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Post> posts;
+
+	protected User() {
+	}
+
+	public User(Integer id, String name, LocalDate birthDate) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.birth = birth;
+		this.birthDate = birthDate;
 	}
 
 	public Integer getId() {
@@ -42,16 +56,24 @@ public class User {
 		this.name = name;
 	}
 
-	public LocalDate getBirth() {
-		return birth;
+	public LocalDate getBirthDate() {
+		return birthDate;
 	}
 
-	public void setBirth(LocalDate birth) {
-		this.birth = birth;
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 	
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", birth=" + birth + "]";
+		return "User [id=" + id + ", name=" + name + ", birthDate=" + birthDate + "]";
 	}
 }
