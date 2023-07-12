@@ -1,33 +1,30 @@
-package com.leonardovaladao.microservicos.currencyexchangeservice.model;
+package com.leonardovaladao.microservices.currencyconversionservice;
 
 import java.math.BigDecimal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+public class CurrencyConversion {
 
-@Entity
-public class CurrencyExchange {
-
-	@Id
 	private Long id;
-	@Column(name = "CURRENCY_FROM")
 	private String from;
-	@Column(name = "CURRENCY_TO")
 	private String to;
 	private BigDecimal conversionMultiple;
 	private String environment;
+	private BigDecimal quantity;
+	private BigDecimal totalCalculatedAmount;
 
-	public CurrencyExchange() {
+	public CurrencyConversion() {
 
 	}
 
-	public CurrencyExchange(Long id, String from, String to, BigDecimal conversionMultiple, String environment) {
+	public CurrencyConversion(Long id, String from, String to, BigDecimal quantity, BigDecimal conversionMultiple,
+			BigDecimal totalCalculatedAmount, String environment) {
 		super();
 		this.id = id;
 		this.from = from;
 		this.to = to;
 		this.conversionMultiple = conversionMultiple;
+		this.quantity = quantity;
+		this.totalCalculatedAmount = totalCalculatedAmount;
 		this.environment = environment;
 	}
 
@@ -61,6 +58,22 @@ public class CurrencyExchange {
 
 	public void setConversionMultiple(BigDecimal conversionMultiple) {
 		this.conversionMultiple = conversionMultiple;
+	}
+
+	public BigDecimal getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
+	}
+
+	public BigDecimal getTotalCalculatedAmount() {
+		return totalCalculatedAmount;
+	}
+
+	public void setTotalCalculatedAmount(BigDecimal totalCalculatedAmount) {
+		this.totalCalculatedAmount = totalCalculatedAmount;
 	}
 
 	public String getEnvironment() {
